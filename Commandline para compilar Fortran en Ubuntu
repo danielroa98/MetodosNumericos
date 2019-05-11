@@ -1,0 +1,8 @@
+Commandline para compilar Fortran en Ubuntu
+
+gfortran -o <nombre del programa que se imprimirá> <nombre del archivo>.f95/f90
+
+./<nombre del programa que se imprimirá>
+
+gfortran -o hello hello.f90
+./hello
