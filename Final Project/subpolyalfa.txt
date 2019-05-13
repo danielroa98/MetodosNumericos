@@ -1,0 +1,92 @@
+subroutine polyregression
+
+IMPLICIT NONE
+      INTEGER :: tx, ty, degree, i, j, sumx = 0, sumy = 0
+      REAL :: ymean
+      CHARACTER (len=50):: firstFileN
+
+      integer, dimension(:), allocatable :: x
+      integer, dimension(:), allocatable :: y
+	  
+	  integer, dimension(:,:), allocatable :: matrix
+      integer, dimension(:), allocatable :: rside
+      integer, dimension(:,:), allocatable :: expx
+	  integer, dimension(:,:), allocatable :: expyx
+      integer, dimension(:), allocatable :: sumexpx
+      integer, dimension(:), allocatable :: sumexpyx
+
+      PRINT*, "You chose: Polynomial Regression"
+
+  	  Print*,"Insert the file name"
+      READ(*,*)firstFileN
+
+      open(10, file = firstFileN)
+      read(10, *)tx, ty, degree
+
+      allocate(x(tx+1))
+      allocate(y(ty+1))
+	  
+	  allocate(matrix(degree+1, degree+1))
+      allocate(rside(degree+1))
+      allocate(expx((degree*2)+1, tx+1))
+	  allocate(expyx(degree+1, tx))
+      allocate(sumexpx((degree*2)+1))
+      allocate(sumexpyx(degree+1))
+      
+	  read(10, *)(x(i), i=1, tx)
+      read(10, *)(y(i), i=1, ty)
+      
+	  do i = 1, tx, 1
+      	sumx = x(i) + sumx
+        sumy = y(i) + sumy
+      end do
+
+      ymean = sumy / ty
+
+      do i = 1, degree*2, 1
+        do j = 1, tx, 1
+          expx(i, j) = x(1)**i
+        end do
+      end do
+        
+	  do i = 1, degree, 1
+        do j = 1, tx, 1
+          expyx(i, j) = y(j) * expx(i, j)
+        end do
+      end do
+      
+	  do i = 1, degree*2, 1
+        do j = 1, tx, 1
+          sumexpx(i) = sumexpx(i) + expx(i, j)
+        end do
+      end do
+
+      do i = 1, degree, 1
+        do j = 1, tx, 1
+          sumexpyx(i) = y(j) * expyx(i, j)
+        end do
+      end do
+	  
+      !do i = 0, degree, 1
+      !  do j = 0, degree, 1
+      !    if (i == 0 .AND. j == 0) then
+      !      matrix(i, j) = tx
+      !    else if ((i == 0 .AND. j == 1) .OR. (i == 1 .AND. j == 0)) then
+      !      matrix(i, j) = sumx
+      !    else 
+      !      matrix(i, j) = 
+      !    end if
+      !  end do
+      !end do
+
+      do i = 0, degree, 1
+        if (i == 0) then
+          rside(i) = sumy
+        else
+          rside(i) = sumexpyx(i)
+        end if
+      end do
+
+      
+
+end subroutine polyregression

@@ -1,0 +1,7 @@
+ ln(a0) ->          Infinity
+ a0 ->          Infinity
+ a1 ->   -1.13598963E+31
+ Sr ->          Infinity
+ St ->   0.402529597    
+ R ->               NaN
+ R^2 ->         -Infinity
